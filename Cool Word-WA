@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_WORDS 10000
+#define MAX_LEN 31
+
+int is_cool_word(char *word) {
+    int freq[26] = {0};
+    int used_freq[31] = {0}; // Max frequency can be 30
+    int unique_letters = 0;
+
+    for (int i = 0; word[i]; i++) {
+        int idx = word[i] - 'a';
+        if (freq[idx] == 0) unique_letters++;
+        freq[idx]++;
+    }
+
+    if (unique_letters < 2) return 0;
+
+    for (int i = 0; i < 26; i++) {
+        if (freq[i]) {
+            if (used_freq[freq[i]]) return 0; // Duplicate frequency found
+            used_freq[freq[i]] = 1;
+        }
+    }
+
+    return 1;
+}
+
+int main() {
+    int case_number = 1, n;
+    while (scanf("%d", &n) == 1) {
+        char word[MAX_LEN];
+        int cool_count = 0;
+
+        for (int i = 0; i < n; i++) {
+            scanf("%s", word);
+            if (is_cool_word(word)) {
+                cool_count++;
+            }
+        }
+
+        printf("Case %d: %d\n", case_number++, cool_count);
+    }
+
+    return 0;
+}
