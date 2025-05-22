@@ -1,0 +1,55 @@
+#include <stdio.h>
+
+int min(int a, int b) {
+    return a < b ? a : b;
+}
+
+int max(int a, int b) {
+    return a > b ? a : b;
+}
+
+int main() {
+    int T;
+    scanf("%d", &T);
+    while (T--) {
+        int countTypes = 0;
+        int freq[10][10] = {0};
+        int n, x, y;
+        int pairs = 0;
+        int repX[10] = {0};
+        int repY[10] = {0};
+
+        scanf("%d", &n);
+        for (int i = 0; i < n; i++) {
+            scanf("%d %d", &x, &y);
+            int minVal = min(x, y);
+            int maxVal = max(x, y);
+            freq[minVal][maxVal]++;
+
+            if (freq[minVal][maxVal] >= 2) {
+                repX[minVal] = minVal;
+                repY[maxVal] = maxVal;
+            }
+        }
+
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                pairs += freq[i][j] * (freq[i][j] - 1) / 2;
+                if (freq[i][j] >= 2) {
+                    countTypes++;
+                }
+            }
+        }
+
+        printf("%d\n", pairs);
+        printf("%d\n", countTypes);
+        for (int i = 0; i < 10; i++) {
+            for (int j = i; j < 10; j++) {
+                if (freq[i][j] >= 2) {
+                    printf("%d %d %d\n", repX[i], repY[j], freq[i][j]);
+                }
+            }
+        }
+    }
+    return 0;
+}
