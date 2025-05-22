@@ -1,0 +1,48 @@
+#include <stdio.h>
+
+int min(int a, int b) {
+    return a < b ? a : b;
+}
+
+int max(int a, int b) {
+    return a > b ? a : b;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        int x, y;
+        int ans = 0;
+        int arr[10][10] = {0};
+        int count = 0;
+        int ans2i[10] = {0}, ans2j[10] = {0};
+        int ans3[10] = {0};
+
+        scanf("%d", &n);
+        for (int i = 0; i < n; i++) {
+            scanf("%d %d", &x, &y);
+            arr[min(x, y)][max(x, y)]++;
+        }
+
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                if (arr[i][j] > 1) {
+                    ans += arr[i][j] * (arr[i][j] - 1) / 2;
+                    ans2i[count] = i;
+                    ans2j[count] = j;
+                    ans3[count] = arr[i][j];
+                    count++;
+                }
+            }
+        }
+
+        printf("%d\n", ans);
+        printf("%d\n", count);
+        if (count > 0) {
+            printf("%d %d %d\n", ans2i[0], ans2j[0], ans3[0]);
+        }
+    }
+    return 0;
+}
